@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Screenings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .user-info, .auth-buttons, .visible-left, .auth-left {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-info a, .visible-left a, .auth-left a, .auth-buttons a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        .user-info, .auth-buttons {
+            margin-right: 25px;
+        }
+
+        .auth-left {
+            margin-left: 15px;
+        }
+
+        .visible-left {
+            margin-left: 25px;
+        }
+
+        .user-info a:hover, .visible-left a:hover, .auth-left a:hover, .auth-buttons a:hover {
+            background-color: #e0e0e0;
+            color: #121212;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 50px;
+        }
+
+        .movie-card {
+            flex: 1;
+            padding: 20px;
+            border-right: 1px solid #444;
+        }
+
+        .movie-card:last-child {
+            border-right: none;
+        }
+
+        .movie-image {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .movie-details {
+            font-size: 16px;
+        }
+
+        .movie-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .screenings-list {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .screening {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #444;
+            padding: 10px 0;
+        }
+
+        .screening-details {
+            flex-grow: 1;
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        .book-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .book-button:hover {
+            background-color: #218838;
+        }
+
+        .divider {
+            margin: 25px 0;
+            border-bottom: 2px solid #444;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="visible-left">
+        <a th:href="@{/homepage}">Home</a>
+        <a th:href="@{/screenings}">Screenings</a>
+    </div>
+    <div class="auth-left" th:if="${#authorization.expression('isAuthenticated()')}">
+        <a th:href="@{/reservations}">My Reservations</a>
+    </div>
+    <div class="header-title">
+        <h1>Cinema XYZ</h1>
+    </div>
+    <div class="auth-buttons" th:unless="${#authorization.expression('isAuthenticated()')}">
+        <a th:href="@{/login}">Login</a>
+        <a th:href="@{/register}">Register</a>
+    </div>
+    <div class="user-info" th:if="${#authorization.expression('isAuthenticated()')}">
+        <p>Hi, <span th:text="${#authentication.principal.firstName}">User</span>!</p>
+        <a th:href="@{/profile}">My Profile</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</header>
+
+<div class="title-section">
+    <h2>Current Screenings</h2>
+</div>
+
+<div class="container" th:each="movie : ${movies}">
+    <div class="movie-card">
+        <img class="movie-image" th:src="@{/images/{thumbnailPath}(thumbnailPath=${movie.thumbnailPath})}" th:alt="${movie.title}"/>
+        <div class="movie-details">
+            <h3 class="movie-title" th:text="${movie.title}">Movie Title</h3>
+            <p><strong>Genre:</strong> <span th:text="${movie.genre}">Genre</span></p>
+            <p><strong>Duration:</strong> <span th:text="${movie.duration}">120</span> minutes</p>
+            <p class="movie-release-date">Release Date: <span th:text="${movie.formattedReleaseDate}"></span></p>
+            <p class="movie-description"><strong>Description:</strong> <span th:text="${movie.description}">Movie Description</span></p>
+            <p><strong>Rating:</strong> <span class="rating" th:text="${movie.rating}">8.5</span> <i class="fas fa-star"></i></p>
+        </div>
+    </div>
+
+        <div class="screenings-list">
+            <h3>Available Screenings</h3>
+            <div th:each="screening : ${screenings}" th:if="${screening.movie.id == movie.id}" class="screening">
+                <div class="screening-details">
+                    <strong>Screening Time:</strong> <span th:text="${screening.formattedScreeningDate}"></span> -
+                    <strong>Cinema Hall:</strong> <span th:text="${screening.cinemaHall.name}">Cinema Hall Name</span>
+                </div>
+                <button class="book-button" th:href="@{/book/{id}(id=${screening.id})}">Book</button>
+            </div>
+        </div>
+    </div>
+
+<footer>
+    <p>&copy; 2024 Cinema XYZ. All rights reserved.</p>
+</footer>
+
+</body>
+
+</html>
