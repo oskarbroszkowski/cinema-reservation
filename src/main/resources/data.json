@@ -1,0 +1,393 @@
+{
+  "users": [
+  {
+    "username": "jan.kowalski@example.com",
+    "password": "adminPass!",
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "roles": ["ROLE_ADMIN"],
+    "enabled": true
+  },
+  {
+    "username": "anna.nowak@example.com",
+    "password": "user1Password!",
+    "firstName": "Anna",
+    "lastName": "Nowak",
+    "roles": ["ROLE_USER"],
+    "enabled": true
+  },
+  {
+    "username": "piotr.zielinski@example.com",
+    "password": "user2Password!",
+    "firstName": "Piotr",
+    "lastName": "Zieliński",
+    "roles": ["ROLE_USER"],
+    "enabled": true
+  },
+  {
+    "username": "katarzyna.wojcik@example.com",
+    "password": "user3Password!",
+    "firstName": "Katarzyna",
+    "lastName": "Wójcik",
+    "roles": ["ROLE_USER"],
+    "enabled": true
+  },
+  {
+    "username": "tomasz.szymanski@example.com",
+    "password": "user4Password!",
+    "firstName": "Tomasz",
+    "lastName": "Szymański",
+    "roles": ["ROLE_USER"],
+    "enabled": true
+  },
+  {
+    "username": "magdalena.kowalczyk@example.com",
+    "password": "user5Password!",
+    "firstName": "Magdalena",
+    "lastName": "Kowalczyk",
+    "roles": ["ROLE_USER"],
+    "enabled": true
+  },
+  {
+    "username": "michal.wozniak@example.com",
+    "password": "user6Password!",
+    "firstName": "Michał",
+    "lastName": "Woźniak",
+    "roles": ["ROLE_USER"],
+    "enabled": true
+  }
+],
+
+  "movies": [
+    {
+      "id": 1,
+      "title": "Inception",
+      "genre": "Sci-Fi",
+      "duration": 148,
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology.",
+      "releaseDate": "2010-07-16",
+      "rating": 8.8,
+      "thumbnailPath": "inception_thumbnail.webp"
+    },
+    {
+      "id": 2,
+      "title": "The Godfather",
+      "genre": "Crime",
+      "duration": 175,
+      "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      "releaseDate": "1972-03-24",
+      "rating": 9.2,
+      "thumbnailPath": "godfather_thumbnail.webp"
+    },
+    {
+      "id": 3,
+      "title": "The Dark Knight",
+      "genre": "Action",
+      "duration": 152,
+      "description": "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham.",
+      "releaseDate": "2008-07-18",
+      "rating": 9.0,
+      "thumbnailPath": "darkknight_thumbnail.webp"
+    },
+    {
+      "id": 4,
+      "title": "Pulp Fiction",
+      "genre": "Crime",
+      "duration": 154,
+      "description": "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+      "releaseDate": "1994-10-14",
+      "rating": 8.9,
+      "thumbnailPath": "pulfiction_thumbnail.webp"
+    },
+    {
+      "id": 5,
+      "title": "The Lord of the Rings: The Return of the King",
+      "genre": "Fantasy",
+      "duration": 201,
+      "description": "The final confrontation between the forces of good and evil fighting for control of the future of Middle-earth.",
+      "releaseDate": "2003-12-17",
+      "rating": 8.9,
+      "thumbnailPath": "returnoftheking_thumbnail.webp"
+    },
+    {
+      "id": 6,
+      "title": "Fight Club",
+      "genre": "Drama",
+      "duration": 139,
+      "description": "An insomniac office worker forms an underground fight club with a soap salesman.",
+      "releaseDate": "1999-10-15",
+      "rating": 8.8,
+      "thumbnailPath": "fightclub_thumbnail.webp"
+    },
+    {
+      "id": 7,
+      "title": "Forrest Gump",
+      "genre": "Drama",
+      "duration": 142,
+      "description": "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal, and other historical events unfold through the viewpoint of an Alabama man with an IQ of 75.",
+      "releaseDate": "1994-07-06",
+      "rating": 8.8,
+      "thumbnailPath": "forrest_thumbnail.webp"
+    },
+    {
+      "id": 8,
+      "title": "The Matrix",
+      "genre": "Sci-Fi",
+      "duration": 136,
+      "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+      "releaseDate": "1999-03-31",
+      "rating": 8.7,
+      "thumbnailPath": "matrix_thumbnail.webp"
+    },
+    {
+      "id": 9,
+      "title": "Goodfellas",
+      "genre": "Crime",
+      "duration": 146,
+      "description": "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito.",
+      "releaseDate": "1990-09-19",
+      "rating": 8.7,
+      "thumbnailPath": "goodfellas_thumbnail.webp"
+    },
+    {
+      "id": 10,
+      "title": "The Shawshank Redemption",
+      "genre": "Drama",
+      "duration": 142,
+      "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "releaseDate": "1994-09-23",
+      "rating": 9.3,
+      "thumbnailPath": "shawshank_thumbnail.webp"
+    }
+  ],
+
+  "cinemaHalls": [
+    {
+      "id": 1,
+      "name": "Hall nr 1",
+      "hallType": "VIP",
+      "rows": 8,
+      "columns":8
+    },
+    {
+      "id": 2,
+      "name": "Hall nr 2",
+      "hallType": "IMAX",
+      "rows": 20,
+      "columns":18
+    },
+    {
+      "id": 3,
+      "name": "Hall nr 3",
+      "hallType": "STANDARD",
+      "rows": 12,
+      "columns":12
+    },
+    {
+      "id": 4,
+      "name": "Hall nr 4",
+      "hallType": "3D",
+      "rows": 16,
+      "columns":12
+    },
+    {
+      "id": 5,
+      "name": "Hall nr 5",
+      "hallType": "VIP",
+      "rows": 8,
+      "columns":8
+    },
+    {
+      "id": 6,
+      "name": "Hall nr 6",
+      "hallType": "IMAX",
+      "rows": 20,
+      "columns":18
+    },
+    {
+      "id": 7,
+      "name": "Hall nr 7",
+      "hallType": "STANDARD",
+      "rows": 12,
+      "columns":12
+    },
+    {
+      "id": 8,
+      "name": "Hall nr 8",
+      "hallType": "3D",
+      "rows": 16,
+      "columns":12
+    }
+  ],
+
+  "screenings": [
+    {
+      "id": 1,
+      "movie": {"id": 1},
+      "screeningDate": "2024-10-01",
+      "screeningTime": "14:00:00",
+      "cinemaHall": {"id": 1}
+    },
+    {
+      "id": 2,
+      "movie": {"id": 2},
+      "screeningDate": "2024-10-01",
+      "screeningTime": "16:30:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 3,
+      "movie": {"id": 3},
+      "screeningDate": "2024-10-02",
+      "screeningTime": "18:00:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 4,
+      "movie": {"id": 1},
+      "screeningDate": "2024-10-03",
+      "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 4}
+    },
+    {
+      "id": 5,
+      "movie": {"id": 5},
+      "screeningDate": "2024-10-02",
+      "screeningTime": "14:00:00",
+      "cinemaHall": {"id": 1}
+    },
+    {
+      "id": 6,
+      "movie": {"id": 2},
+      "screeningDate": "2024-10-03",
+      "screeningTime": "16:00:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 7,
+      "movie": {"id": 3},
+      "screeningDate": "2024-10-04",
+      "screeningTime": "18:00:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 8,
+      "movie": {"id": 4},
+      "screeningDate": "2024-10-04",
+      "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 4}
+    },
+    {
+      "id": 9,
+      "movie": {"id": 6},
+      "screeningDate": "2024-10-05",
+      "screeningTime": "14:00:00",
+      "cinemaHall": {"id": 1}
+    },
+    {
+      "id": 10,
+      "movie": {"id": 4},
+      "screeningDate": "2024-10-06",
+      "screeningTime": "16:00:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 11,
+      "movie": {"id": 5},
+      "screeningDate": "2024-10-07",
+      "screeningTime": "18:00:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 12,
+      "movie": {"id": 1},
+      "screeningDate": "2024-10-08",
+      "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 4}
+    },
+    {
+      "id": 13,
+      "movie": {"id": 3},
+      "screeningDate": "2024-10-09",
+      "screeningTime": "14:00:00",
+      "cinemaHall": {"id": 1}
+    },
+    {
+      "id": 14,
+      "movie": {"id": 2},
+      "screeningDate": "2024-10-10",
+      "screeningTime": "16:30:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 15,
+      "movie": {"id": 4},
+      "screeningDate": "2024-10-11",
+      "screeningTime": "18:00:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 16,
+      "movie": {"id": 5},
+      "screeningDate": "2024-10-12",
+      "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 4}
+    },
+    {
+      "id": 17,
+      "movie": {"id": 6},
+      "screeningDate": "2024-10-13",
+      "screeningTime": "14:00:00",
+      "cinemaHall": {"id": 1}
+    },
+    {
+      "id": 18,
+      "movie": {"id": 2},
+      "screeningDate": "2024-10-14",
+      "screeningTime": "16:30:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 19,
+      "movie": {"id": 4},
+      "screeningDate": "2024-10-15",
+      "screeningTime": "18:00:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 20,
+      "movie": {"id": 1},
+      "screeningDate": "2024-10-16",
+      "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 4}
+    },
+    {
+      "id": 21,
+      "movie": {"id": 5},
+      "screeningDate": "2024-10-17",
+      "screeningTime": "14:00:00",
+      "cinemaHall": {"id": 1}
+    },
+    {
+      "id": 22,
+      "movie": {"id": 3},
+      "screeningDate": "2024-10-18",
+      "screeningTime": "16:00:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 23,
+      "movie": {"id": 6},
+      "screeningDate": "2024-10-19",
+      "screeningTime": "18:00:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 24,
+      "movie": {"id": 1},
+      "screeningDate": "2024-10-20",
+      "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 4}
+    }
+  ]
+}

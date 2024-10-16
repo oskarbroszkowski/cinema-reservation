@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deletion Successful</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        header {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            margin-left: 45% ;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            let countdown = 2;
+            const countdownElement = document.getElementById("countdown");
+
+            const interval = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+
+                if (countdown === 0) {
+                    clearInterval(interval);
+                    window.location.href = "/homepage";
+                }
+            }, 1000);
+        };
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="header-title">
+        <h1>Cinema XYZ</h1>
+    </div>
+</header>
+
+<div class="container">
+    <h2>Your account has been successfully deleted!</h2>
+    <p>Redirecting to homepage in <span id="countdown">2</span> seconds...</p>
+</div>
+
+<footer>
+    <p>&copy; 2024 Cinema XYZ. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
