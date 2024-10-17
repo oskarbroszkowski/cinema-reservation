@@ -39,9 +39,8 @@ public class BookingController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/book/{screeningId}/{cinemaHallId}")
+    @GetMapping("/book/{screeningId}")
     public String bookScreening(@PathVariable("screeningId") Long screeningId,
-                                @PathVariable("cinemaHallId") Long cinemaHallId,
                                 Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -50,8 +49,8 @@ public class BookingController {
             return "redirect:/login";
         }
 
-        Optional<CinemaHall> optionalCinemaHall = cinemaHallService.findCinemaHallById(cinemaHallId);
         Optional<Screening> optionalScreening = screeningService.findScreeningById(screeningId);
+        Optional<CinemaHall> optionalCinemaHall = cinemaHallService.findCinemaHallById(optionalScreening.get().getCinemaHall().getId());
 
         if (optionalCinemaHall.isPresent() && optionalScreening.isPresent()) {
             CinemaHall cinemaHall = optionalCinemaHall.get();
@@ -112,13 +111,20 @@ public class BookingController {
                 reservation.setUser(currentUser);
                 reservation.setSeatRow(seat.getRow());
                 reservation.setSeatColumn(seat.getColumn());
+                String seatName = convertRowToLetter(seat.getRow()) + (seat.getColumn() + 1);
+                reservation.setSeatName(seatName);
 
                 reservationService.saveReservation(reservation);
+
             } else {
                 logger.warn("Screening not found for seat: {}", seat);
                 return ResponseEntity.badRequest().body("Screening not found");
             }
         }
         return ResponseEntity.ok("Seats reserved successfully");
+    }
+
+    private String convertRowToLetter(int row) {
+        return String.valueOf((char) ('A' + row));
     }
 }

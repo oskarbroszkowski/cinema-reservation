@@ -31,7 +31,6 @@
 
         h1 {
             margin: 0;
-            margin-bottom: 25px;
         }
 
         .user-info, .auth-buttons, .visible-left, .auth-left {
@@ -156,7 +155,7 @@
     <div th:each="screening : ${screenings}" class="screening-time">
         <p th:text="${screening.formattedScreeningDate}"></p>
         <p th:text="${screening.cinemaHall.name + ' - ' + screening.cinemaHall.hallType}"></p>
-        <button class="book-button" th:onclick="'location.href=\'/book/' + ${screening.id} + '/' + ${screening.cinemaHall.id} + '\''">Book Now</button>
+        <button class="book-button" th:onclick="'location.href=\'/book/' + ${screening.id} + '\''">Book Now</button>
     </div>
 
     <div th:if="${screenings.isEmpty()}" style="text-align: center; margin-top: 20px;">

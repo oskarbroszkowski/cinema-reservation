@@ -205,7 +205,7 @@
                     <strong>Screening Time:</strong> <span th:text="${screening.formattedScreeningDate}"></span> -
                     <strong>Cinema Hall:</strong> <span th:text="${screening.cinemaHall.name}">Cinema Hall Name</span>
                 </div>
-                <a class="book-button" th:href="@{/book/{movieId}/{screeningId}(movieId=${screening.movie.id}, screeningId=${screening.id})}">Book</a>
+                <a class="book-button" th:href="@{/book/{screeningId}(screeningId=${screening.id})}">Book</a>
             </div>
         </div>
     </div>

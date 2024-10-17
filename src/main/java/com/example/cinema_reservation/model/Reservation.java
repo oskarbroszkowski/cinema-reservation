@@ -22,6 +22,10 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Transient
+    private String formattedScreeningDate;
+
     private int seatRow;
     private int seatColumn;
+    private String seatName;
 }

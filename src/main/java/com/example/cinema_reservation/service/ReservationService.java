@@ -10,4 +10,5 @@ public interface ReservationService {
     Reservation saveReservation(Reservation reservation);
     List<Reservation> findReservationsByUser(User user);
     List<Reservation> findReservationsByScreening(Screening screening);
+    boolean deleteReservationById(Long id);
 }

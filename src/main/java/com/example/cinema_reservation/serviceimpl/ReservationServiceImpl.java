@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -33,5 +34,15 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<Reservation> findReservationsByScreening(Screening screening) {
         return reservationRepository.findReservationsByScreening(screening);
+    }
+
+    @Override
+    public boolean deleteReservationById(Long id) {
+        Optional<Reservation> reservationOptional = reservationRepository.findById(id);
+        if (reservationOptional.isPresent()) {
+            reservationRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

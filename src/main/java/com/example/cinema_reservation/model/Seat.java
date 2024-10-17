@@ -16,6 +16,7 @@ public class Seat {
 
     private int row;
     private int column;
+    private String seatName;
 
     @ManyToOne
     @JoinColumn(name = "screening_id", nullable = false)
