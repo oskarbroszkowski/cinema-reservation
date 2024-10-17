@@ -82,7 +82,7 @@ public class BookingController {
     }
 
     private boolean seatIsReserved(int row, int column, Screening screening) {
-        return reservationService.findByScreening(screening).stream()
+        return reservationService.findReservationsByScreening(screening).stream()
                 .anyMatch(reservation -> reservation.getSeatRow() == row && reservation.getSeatColumn() == column);
     }
 

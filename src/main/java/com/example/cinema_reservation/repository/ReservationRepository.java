@@ -12,6 +12,6 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     boolean existsByScreeningAndSeatRowAndSeatColumn(Screening screening, int seatRow, int seatColumn);
-    List<Reservation> findByUser(User user);
-    List<Reservation> findByScreening(Screening screening);
+    List<Reservation> findReservationsByUser(User user);
+    List<Reservation> findReservationsByScreening(Screening screening);
 }

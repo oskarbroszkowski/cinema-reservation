@@ -129,7 +129,7 @@
         }
 
         footer {
-            margin-top: auto;
+            margin-top: 40px;
             text-align: center;
             color: #888;
         }
@@ -160,7 +160,7 @@
 </header>
 
 <div class="container">
-    <a th:href="@{/movies/{id}(id=${movie.id})}" class="movie-card" th:each="movie : ${movies}">
+    <a th:href="@{/movie/{id}(id=${movie.id})}" class="movie-card" th:each="movie : ${movies}">
         <img class="movie-image" th:src="@{/images/{thumbnailPath}(thumbnailPath=${movie.thumbnailPath})}" th:alt="${movie.title}"/>
         <div class="movie-details">
             <h3 class="movie-title" th:text="${movie.title}">Movie Title</h3>

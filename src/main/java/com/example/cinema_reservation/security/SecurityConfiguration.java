@@ -24,14 +24,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .requestCache(requestCache -> requestCache
-                        .requestCache(new HttpSessionRequestCache())
-                )
-                .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.sendRedirect("/login?redirect=" + request.getRequestURI());
-                        })
-                )
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -43,6 +35,13 @@ public class SecurityConfiguration {
                 )
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.
                         FrameOptionsConfig::disable))
+                .requestCache(requestCache -> requestCache
+                        .requestCache(new HttpSessionRequestCache()))
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/login?redirect=" + request.getRequestURI());
+                        })
+                )
                 .securityContext((securityContext) -> securityContext
                 .securityContextRepository(new DelegatingSecurityContextRepository(
                         new RequestAttributeSecurityContextRepository(),

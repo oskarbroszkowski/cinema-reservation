@@ -26,12 +26,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findByUser(User user) {
-        return reservationRepository.findByUser(user);
+    public List<Reservation> findReservationsByUser(User user) {
+        return reservationRepository.findReservationsByUser(user);
     }
 
     @Override
-    public List<Reservation> findByScreening(Screening screening) {
-        return reservationRepository.findByScreening(screening);
+    public List<Reservation> findReservationsByScreening(Screening screening) {
+        return reservationRepository.findReservationsByScreening(screening);
     }
 }

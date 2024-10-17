@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ReservationService {
     Reservation saveReservation(Reservation reservation);
-    List<Reservation> findByUser(User user);
-    List<Reservation> findByScreening(Screening screening);
+    List<Reservation> findReservationsByUser(User user);
+    List<Reservation> findReservationsByScreening(Screening screening);
 }
