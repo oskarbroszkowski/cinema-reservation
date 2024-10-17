@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <title>Book Screening</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .user-info a, .visible-left a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        .user-info {
+            display: flex;
+            gap: 15px;
+            margin-right: 25px;
+            align-items: center;
+        }
+
+        .visible-left {
+            display: flex;
+            gap: 15px;
+            margin-left: 25px;
+        }
+
+        .user-info a:hover, .visible-left a:hover {
+            background-color: #e0e0e0;
+            color: #121212;
+        }
+
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .seating-chart {
+            display: table;
+            margin: 20px auto;
+            border-spacing: 10px;
+        }
+
+        .header-row {
+            display: table-row;
+        }
+
+        .header-cell {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            display: table-cell;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .seat {
+            display: table-cell;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            text-align: center;
+            border-radius: 5px;
+            vertical-align: middle;
+            background-color: green;
+            color: white;
+            cursor: pointer;
+        }
+
+        .reserved {
+            background-color: red;
+            cursor: not-allowed;
+        }
+
+        .selected {
+            background-color: yellow;
+            color: black;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            color: #121212;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #888;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="visible-left">
+        <a th:href="@{/homepage}">Home</a>
+        <a th:href="@{/screenings}">Screenings</a>
+        <a th:href="@{/reservations}">My Reservations</a>
+    </div>
+    <div class="header-title">
+        <h1>Cinema XYZ</h1>
+    </div>
+    <div class="user-info" th:if="${#authorization.expression('isAuthenticated()')}">
+        <p>Hi, <span th:text="${#authentication.principal.firstName}">User</span>!</p>
+        <a th:href="@{/profile}">My Profile</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</header>
+<h2>Book Seats for Screening</h2>
+
+<div class="seating-chart">
+    <div class="header-row">
+        <div class="header-cell"></div>
+        <div th:each="col, colStat : ${columnIndices}" class="header-cell" th:text="${col + 1}"></div>
+    </div>
+
+    <div th:each="row, rowStat : ${rowIndices}" class="row">
+        <div class="header-cell" th:text="${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(row)}"></div>
+        <div th:each="col : ${columnIndices}" class="seat"
+             th:classappend="${seatReservedMap[row + '_' + col]} ? 'reserved' : ''"
+             th:data-row="${row}"
+             th:data-col="${col}"
+             onclick="selectSeat(this)">
+        </div>
+    </div>
+</div>
+
+<button type="button" onclick="reserveSeats()">Reserve Now</button>
+
+<script>
+    function selectSeat(seat) {
+        if (seat.classList.contains('reserved')) {
+            alert('This seat is already reserved.');
+            return;
+        }
+        seat.classList.toggle('selected');
+    }
+
+    function reserveSeats() {
+        console.log('Reserve Seats function called');
+        const selectedSeats = document.querySelectorAll('.selected');
+
+        if (selectedSeats.length === 0) {
+            alert('Please select at least one seat to reserve.');
+            return;
+        }
+
+        const urlParts = window.location.pathname.split('/');
+        const screeningId = urlParts[urlParts.length - 1];
+
+        const seats = Array.from(selectedSeats).map(seat => ({
+            row: parseInt(seat.dataset.row, 10),
+            column: parseInt(seat.dataset.col, 10),
+            reserved: true,
+            screening: { id: screeningId }
+        }));
+
+        console.log('Seats to reserve:', seats);
+
+        const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+
+        fetch('/reserve', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify(seats)
+        })
+            .then(response => {
+            if (response.ok) {
+                alert('Seats reserved successfully!');
+                window.location.href = '/reservations';
+            } else {
+                return response.text().then(errorMessage => {
+                    console.error('Error response:', errorMessage);
+                    alert('Failed to reserve seats: ' + errorMessage);
+                });
+            }
+        })
+            .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while reserving seats.');
+        });
+    }
+</script>
+</body>
+</html>
