@@ -387,7 +387,91 @@
       "movie": {"id": 1},
       "screeningDate": "2024-10-20",
       "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 6}
+    },
+    {
+      "id": 25,
+      "movie": {"id": 7},
+      "screeningDate": "2024-10-03",
+      "screeningTime": "20:30:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 26,
+      "movie": {"id": 7},
+      "screeningDate": "2024-10-09",
+      "screeningTime": "19:45:00",
+      "cinemaHall": {"id": 8}
+    },
+    {
+      "id": 27,
+      "movie": {"id": 7},
+      "screeningDate": "2024-10-21",
+      "screeningTime": "09:20:00",
+      "cinemaHall": {"id": 6}
+    },
+    {
+      "id": 28,
+      "movie": {"id": 8},
+      "screeningDate": "2024-10-01",
+      "screeningTime": "10:00:00",
+      "cinemaHall": {"id": 7}
+    },
+    {
+      "id": 29,
+      "movie": {"id": 8},
+      "screeningDate": "2024-10-13",
+      "screeningTime": "11:20:00",
+      "cinemaHall": {"id": 8}
+    },
+    {
+      "id": 30,
+      "movie": {"id": 8},
+      "screeningDate": "2024-10-27",
+      "screeningTime": "18:30:00",
+      "cinemaHall": {"id": 1}
+    },
+    {
+      "id": 31,
+      "movie": {"id": 9},
+      "screeningDate": "2024-10-02",
+      "screeningTime": "20:30:00",
       "cinemaHall": {"id": 4}
+    },
+    {
+      "id": 32,
+      "movie": {"id": 9},
+      "screeningDate": "2024-10-08",
+      "screeningTime": "12:45:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 33,
+      "movie": {"id": 9},
+      "screeningDate": "2024-10-11",
+      "screeningTime": "16:30:00",
+      "cinemaHall": {"id": 3}
+    },
+    {
+      "id": 34,
+      "movie": {"id": 10},
+      "screeningDate": "2024-10-01",
+      "screeningTime": "15:15:00",
+      "cinemaHall": {"id": 2}
+    },
+    {
+      "id": 35,
+      "movie": {"id": 10},
+      "screeningDate": "2024-10-07",
+      "screeningTime": "13:45:00",
+      "cinemaHall": {"id": 4}
+    },
+    {
+      "id": 36,
+      "movie": {"id": 10},
+      "screeningDate": "2024-10-14",
+      "screeningTime": "18:30:00",
+      "cinemaHall": {"id": 8}
     }
   ]
 }

@@ -132,6 +132,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-left: 15px;
+            text-decoration: none;
         }
 
         .book-button:hover {
@@ -198,7 +199,7 @@
                     <strong>Screening Time:</strong> <span th:text="${screening.formattedScreeningDate}"></span> -
                     <strong>Cinema Hall:</strong> <span th:text="${screening.cinemaHall.name}">Cinema Hall Name</span>
                 </div>
-                <button class="book-button" th:href="@{/book/{id}(id=${screening.id})}">Book</button>
+                <a class="book-button" th:href="@{/book/{movieId}/{screeningId}(movieId=${screening.movie.id}, screeningId=${screening.id})}">Book</a>
             </div>
         </div>
     </div>

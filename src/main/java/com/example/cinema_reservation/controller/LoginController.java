@@ -48,7 +48,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String login(@RequestParam String username, @RequestParam String password,
+                        HttpServletRequest request, RedirectAttributes redirectAttributes) {
         UsernamePasswordAuthenticationToken authenticationRequest =
                 new UsernamePasswordAuthenticationToken(username, password);
 
@@ -58,7 +59,8 @@ public class LoginController {
 
             logger.info("User logged in: {}", username);
 
-            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+            request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                    SecurityContextHolder.getContext());
 
             SavedRequest savedRequest = requestCache.getRequest(request, null);
             if (savedRequest != null) {
@@ -66,10 +68,12 @@ public class LoginController {
             }
 
             return "redirect:/homepage";
+
         } catch (BadCredentialsException e) {
             logger.error("Login attempt failed for username: {} - Bad credentials", username);
             redirectAttributes.addFlashAttribute("error", "Invalid username or password.");
             return "redirect:/login";
+
         } catch (Exception e) {
             logger.error("Login attempt failed for username: {}", username, e);
             redirectAttributes.addFlashAttribute("error", "An unexpected error occurred.");
