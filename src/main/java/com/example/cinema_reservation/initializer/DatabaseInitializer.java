@@ -47,6 +47,7 @@ public class DatabaseInitializer {
         List<User> users = dataFile.getUsers();
         for (User user : users) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setMatchingPassword(user.getPassword());
         }
         userRepository.saveAll(users);
 

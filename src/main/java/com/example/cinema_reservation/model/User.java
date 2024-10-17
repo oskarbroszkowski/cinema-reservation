@@ -1,5 +1,6 @@
 package com.example.cinema_reservation.model;
 
+import com.example.cinema_reservation.validation.PasswordMatches;
 import com.example.cinema_reservation.validation.ValidEmail;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,9 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@PasswordMatches
 @Getter
 @Setter
-//@PasswordMatches
 @Table(name = "users")
 public class User implements UserDetails {
 
