@@ -12,10 +12,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+
+import static org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter.Directive.COOKIES;
 
 @Configuration
 @EnableWebSecurity
@@ -46,7 +50,10 @@ public class SecurityConfiguration {
                 .securityContextRepository(new DelegatingSecurityContextRepository(
                         new RequestAttributeSecurityContextRepository(),
                         new HttpSessionSecurityContextRepository()
-                )));
+                        )))
+                .logout((logout) -> logout.addLogoutHandler(new HeaderWriterLogoutHandler
+                        (new ClearSiteDataHeaderWriter(COOKIES))
+                ));
 
         return http.build();
     }
