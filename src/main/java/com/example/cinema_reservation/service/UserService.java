@@ -12,6 +12,7 @@ public interface UserService {
 
     List<User> getAllUsers();
     User registerUser(User user) throws UserAlreadyExistException;
+    User registerAdmin(User user) throws UserAlreadyExistException;
     Optional<User> findUserById(Long id);
     Optional<User> findUserByUsername(String username);
     User saveUser(User user);

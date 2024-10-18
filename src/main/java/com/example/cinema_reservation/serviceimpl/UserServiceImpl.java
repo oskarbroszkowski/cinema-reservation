@@ -50,6 +50,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User registerAdmin(User user) throws UserAlreadyExistException {
+        if (userExist(user.getUsername())) {
+            throw new UserAlreadyExistException("There is an account with that email address: "
+                    + user.getUsername());
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Collections.singleton(Role.ROLE_ADMIN));
+
+        return userRepository.save(user);
+    }
+
+    @Override
     public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }

@@ -1,6 +1,8 @@
 package com.example.cinema_reservation.controller;
 
+import com.example.cinema_reservation.model.Role;
 import com.example.cinema_reservation.service.UserService;
+import com.example.cinema_reservation.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +63,12 @@ public class LoginController {
 
             request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                     SecurityContextHolder.getContext());
+
+            User authenticatedUser = (User) authenticationResponse.getPrincipal();
+
+            if (authenticatedUser.getRoles().contains(Role.ROLE_ADMIN)) {
+                return "redirect:/admin/dashboard";
+            }
 
             SavedRequest savedRequest = requestCache.getRequest(request, null);
             if (savedRequest != null) {

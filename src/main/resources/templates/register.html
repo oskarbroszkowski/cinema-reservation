@@ -151,6 +151,40 @@
             background-color: #218838;
         }
 
+        .admin-password-group {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .admin-password-group input {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-group.employee-register {
+            margin-top: 5px;
+        }
+
+        .button-employee {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            background-color: #FFA726 !important;;
+            color: black !important;;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .button-employee:hover {
+            background-color: #FB8C00 !important;;
+        }
+
         footer {
             margin-top: 40px;
             text-align: center;
@@ -162,7 +196,6 @@
 <header>
     <div class="visible-left">
         <a th:href="@{/homepage}">Home</a>
-        <a th:href="@{/screenings}">Screenings</a>
     </div>
     <div class="header-title">
         <h1>Cinema XYZ</h1>
@@ -201,19 +234,49 @@
                 <label for="matchingPassword">Confirm Password</label>
                 <input type="password" th:field="*{matchingPassword}" id="matchingPassword" required />
             </div>
+            <div class="form-group" id="adminPasswordField" style="display: none;">
+                <label for="adminPassword">Admin Password</label>
+                <input type="password" name="adminPassword" id="adminPassword" required />
+                <p th:if="${adminPasswordError}" th:text="${adminPasswordError}">Invalid admin password</p>
+            </div>
+
             <div class="form-group">
-                <button type="submit"> Submit</button>
+                <button type="submit" id="submit">Submit</button>
             </div>
             <div class="form-group">
-                <a href="/login" class="button-login">Already registered? Log in here</a>
+                <a href="/login" class="button-login" id="button-login">Already registered? Log in here</a>
             </div>
-            <div class="error-message" th:if="${error}">
-                <p th:text="${error}"></p>
+            <div class="form-group employee-register">
+                <button type="button" class="button-employee" id="registerAsEmployee">Register as Employee</button>
             </div>
         </form>
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const employeeRegisterButton = document.getElementById('registerAsEmployee');
+        const adminPasswordField = document.getElementById('adminPasswordField');
+        const submit = document.getElementById('submit');
+        const loginButton = document.getElementById('button-login');
+
+        let isEmployeeRegister = false;
+
+        employeeRegisterButton.addEventListener('click', function () {
+            isEmployeeRegister = !isEmployeeRegister;
+
+            if (isEmployeeRegister) {
+                adminPasswordField.style.display = 'block';
+                employeeRegisterButton.style.display = 'none';
+                loginButton.style.display = 'none';
+
+            } else {
+                adminPasswordField.style.display = 'none';
+                employeeRegisterButton.textContent = 'Register as Employee';
+            }
+        });
+    });
+</script>
 
 <footer>
     <p>&copy; 2024 Cinema XYZ. All rights reserved.</p>
