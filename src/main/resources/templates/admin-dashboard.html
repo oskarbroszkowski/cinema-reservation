@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema XYZ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: #FB8C00;
+        }
+
+        h2 {
+            margin-left: 20px;
+            color: #FB8C00;
+        }
+
+        .user-info, .visible-left {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-info a, .visible-left a {
+            color: #FB8C00;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #FB8C00;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        .user-info {
+            color: #FB8C00;
+            margin-right: 25px;
+        }
+
+        .visible-left {
+            margin-left: 25px;
+        }
+
+        .user-info a:hover, .visible-left a:hover {
+            background-color: #FB8C00;
+            color: #121212;
+        }
+
+        .column {
+            flex: 1;
+            margin: 0 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100%;
+            justify-content: flex-start;
+        }
+
+        .column-title {
+            font-size: 24px;
+            color: #FB8C00;
+            margin-bottom: 20px;
+        }
+
+        .sidebar {
+            flex: 0 0 220px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar, .content-area, .our-cinema {
+            width: 100%;
+        }
+
+        .sidebar a, .our-cinema ul {
+            width: 100%;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #FB8C00;
+            padding: 10px 15px;
+            border: 1px solid #FB8C00;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: center;
+            width: 100%;
+            cursor: pointer;
+            box-sizing: border-box;
+            background-color: #1e1e1e;
+        }
+
+        .sidebar a:hover {
+            background-color: #FB8C00;
+            color: #121212;
+        }
+
+        .content-area {
+            text-align: center;
+            color: #FB8C00;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .content-area h2, .our-cinema h2 {
+            margin-bottom: 5px;
+        }
+
+        .content-area p {
+            margin: 5px 0;
+        }
+
+        .cinema-manager-container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .column {
+            flex: 1;
+            margin: 0 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cinema-item {
+            background-color: #1e1e1e;
+            color: #FB8C00;
+            padding: 10px 15px;
+            border: 1px solid #FB8C00;
+            border-radius: 5px;
+            text-align: center;
+            cursor: default;
+            box-sizing: border-box;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #888;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="visible-left">
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+    </div>
+    <div class="header-title">
+        <h1>Cinema XYZ - Employee</h1>
+    </div>
+    <div class="user-info" th:if="${#authorization.expression('isAuthenticated()')}">
+        <p>Hi, <span th:text="${#authentication.principal.firstName}">User</span>!</p>
+        <a th:href="@{/admin/profile}">My Profile</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</header>
+
+<div class="cinema-manager-container">
+    <div class="column">
+        <h2 class="column-title">Cinema Manager</h2>
+        <div class="sidebar">
+            <a th:href="@{/admin/movies}">Manage Movies</a>
+            <a th:href="@{/admin/screenings}">Manage Screenings</a>
+            <a th:href="@{/admin/users}">Manage Users</a>
+            <a th:href="@{/admin/cinemahalls}">Manage Cinema Halls</a>
+            <a th:href="@{/admin/reservations}">Manage Reservations</a>
+        </div>
+    </div>
+
+    <div class="column">
+        <h2 class="column-title">Admin Panel</h2>
+        <div class="content-area">
+            <p>Select an option from the left to manage the system.</p>
+            <p>Look right to learn about current cinema status.</p>
+        </div>
+    </div>
+
+    <div class="column">
+        <h2 class="column-title">Our Cinema</h2>
+        <div class="sidebar">
+            <div class="cinema-item" th:text="'Movies playing: ' + ${moviesCount}">Movies playing: 5</div>
+            <div class="cinema-item" th:text="'Planned screenings: ' + ${screeningsCount}">Planned screenings: 10</div>
+            <div class="cinema-item" th:text="'Active users: ' + ${usersCount}">Active users: 120</div>
+            <div class="cinema-item" th:text="'Cinema halls: ' + ${cinemaHallsCount}">Cinema halls: 8</div>
+            <div class="cinema-item" th:text="'Reservations made: ' + ${reservationsCount}">Reservations made: 200</div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Cinema XYZ. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
