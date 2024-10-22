@@ -2,7 +2,9 @@ package com.example.cinema_reservation.serviceimpl;
 
 import com.example.cinema_reservation.model.Movie;
 import com.example.cinema_reservation.repository.MovieRepository;
+import com.example.cinema_reservation.repository.ScreeningRepository;
 import com.example.cinema_reservation.service.MovieService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,14 @@ import java.util.Optional;
 @Service
 public class MovieServiceImpl implements MovieService {
 
+    private final MovieRepository movieRepository;
+    private final ScreeningRepository screeningsRepository;
+
     @Autowired
-    private MovieRepository movieRepository;
+    public MovieServiceImpl(MovieRepository movieRepository, ScreeningRepository screeningsRepository) {
+        this.movieRepository = movieRepository;
+        this.screeningsRepository = screeningsRepository;
+    }
 
     @Override
     public List<Movie> findAllMovies() {
@@ -31,7 +39,20 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void deleteMovie(Long id) {
-        movieRepository.deleteById(id);
+    @Transactional
+    public boolean deleteMovie(Long id) {
+        Optional<Movie> movieOptional = movieRepository.findById(id);
+
+        if (movieOptional.isPresent()) {
+            screeningsRepository.deleteByMovieId(id);
+            movieRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int movieCount() {
+        return (int) movieRepository.count();
     }
 }

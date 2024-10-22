@@ -39,4 +39,9 @@ public class ScreeningServiceImpl implements ScreeningService {
     public List<Screening> findScreeningByMovie(Movie movie) {
         return screeningRepository.findByMovie(movie);
     }
+
+    @Override
+    public int screeningsCount() {
+        return (int) screeningRepository.count();
+    }
 }

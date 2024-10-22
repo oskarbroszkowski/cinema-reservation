@@ -93,6 +93,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public int usersCount() {
+        return (int) userRepository.count();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         return userRepository.findUserByUsername(username)

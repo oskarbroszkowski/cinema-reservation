@@ -18,4 +18,5 @@ public interface UserService {
     User saveUser(User user);
     boolean userExist(String username);
     boolean deleteUserById(Long id);
+    int usersCount();
 }

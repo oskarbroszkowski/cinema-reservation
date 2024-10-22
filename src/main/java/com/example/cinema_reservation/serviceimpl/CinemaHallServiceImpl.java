@@ -46,4 +46,9 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     public void deleteCinemaHallById(Long id) {
         cinemaHallRepository.deleteById(id);
     }
+
+    @Override
+    public int cinemaHallCount() {
+        return (int) cinemaHallRepository.count();
+    }
 }

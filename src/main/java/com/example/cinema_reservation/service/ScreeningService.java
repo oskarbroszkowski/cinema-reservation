@@ -15,5 +15,6 @@ public interface ScreeningService {
     Screening saveScreening(Screening screening);
     void deleteScreeningById(Long id);
     List<Screening> findScreeningByMovie(Movie movie);
+    int screeningsCount();
 }
 

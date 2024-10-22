@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface CinemaHallRepository extends JpaRepository<CinemaHall, Long> {
     List<CinemaHall> findByHallType(String hallType);
+    long count();
 }

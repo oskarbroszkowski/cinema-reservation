@@ -42,12 +42,14 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(String title, String genre, int duration, String description, LocalDate releaseDate, double rating) {
+    public Movie(String title, String genre, int duration, String description,
+                 LocalDate releaseDate, double rating, String thumbnailPath) {
         this.title = title;
         this.genre = genre;
         this.duration = duration;
         this.description = description;
         this.releaseDate = releaseDate;
         this.rating = rating;
+        this.thumbnailPath = thumbnailPath;
     }
 }

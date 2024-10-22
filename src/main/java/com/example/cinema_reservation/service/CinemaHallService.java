@@ -14,4 +14,5 @@ public interface CinemaHallService {
     CinemaHall saveCinemaHall(CinemaHall cinemaHall);
     CinemaHall updateCinemaHall(Long id, CinemaHall updatedCinemaHall);
     void deleteCinemaHallById(Long id);
+    int cinemaHallCount();
 }

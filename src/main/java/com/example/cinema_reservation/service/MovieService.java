@@ -12,5 +12,6 @@ public interface MovieService {
     List<Movie> findAllMovies();
     Optional<Movie> findMovieById(Long id);
     Movie saveMovie(Movie movie);
-    void deleteMovie(Long id);
+    boolean deleteMovie(Long id);
+    int movieCount();
 }

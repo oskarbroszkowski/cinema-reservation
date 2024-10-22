@@ -45,4 +45,9 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return false;
     }
+
+    @Override
+    public int reservationCount() {
+        return (int) reservationRepository.count();
+    }
 }
