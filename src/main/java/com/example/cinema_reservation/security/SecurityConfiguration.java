@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/login*", "/register*", "/h2-console/**",
                                 "/homepage*", "/images/**", "/favicon.ico", "/error",
-                                "/logout*", "/register-success", "/screenings*",
+                                "/logout*", "/register-success", "/screenings/**",
                                 "/movie/**").permitAll()
                         .anyRequest().authenticated()
                 )

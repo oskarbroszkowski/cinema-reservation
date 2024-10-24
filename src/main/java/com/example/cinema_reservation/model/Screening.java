@@ -35,4 +35,12 @@ public class Screening {
     private String formattedScreeningDate;
 
     public Screening() {}
+
+    public Screening(Movie movie, LocalDate screeningDate, LocalTime screeningTime,
+                     CinemaHall cinemaHall) {
+        this.movie = movie;
+        this.screeningDate = screeningDate;
+        this.screeningTime = screeningTime;
+        this.cinemaHall = cinemaHall;
+    }
 }
