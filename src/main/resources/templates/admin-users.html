@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #FB8C00;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            height: 50px;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: #FB8C00;
+        }
+
+        .users {
+            margin-top: 25px;
+            color: #FB8C00;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .user-info a, .visible-left a {
+            color: #FB8C00;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #FB8C00;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        .user-info {
+            color: #FB8C00;
+            display: flex;
+            gap: 15px;
+            margin-right: 25px;
+            align-items: center;
+        }
+
+        .visible-left {
+            display: flex;
+            gap: 15px;
+            margin-left: 25px;
+        }
+
+        .user-info a:hover, .visible-left a:hover {
+            background-color: #FB8C00;
+            color: #121212;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #888;
+        }
+
+        table {
+            width: 100%;
+            background-color: #1e1e1e;
+            color: #FB8C00;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+
+        th {
+            background-color: #2a2a2a;
+        }
+
+        a {
+            color: #FB8C00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #FFA726;
+        }
+
+        td a {
+            margin-right: 10px;
+        }
+
+        .column-divider {
+            border-left: 2px solid #444;
+            padding-left: 10px;
+        }
+
+        td:last-child {
+            border-right: none;
+        }
+
+        .form-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-container form {
+            display: inline;
+            margin: 0;
+        }
+        .file-selector-button, button {
+            all: unset;
+            height: 40px;
+            width: 60px;
+            cursor: pointer;
+            color: #007bff;
+            border: none;
+            background-color: #2a2a2a;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .block-link:hover, .unblock-link:hover {
+            background-color: #0056b3 !important;
+        }
+
+
+        .delete-link {
+            color: #FF3B3B;
+            background-color: #2a2a2a;
+        }
+
+        .delete-link:hover {
+            color: #FF6B6B;
+            background-color: #2a2a2a;
+        }
+
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="visible-left">
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+    </div>
+    <div class="header-title">
+        <h1>Cinema XYZ - Employee</h1>
+    </div>
+    <div class="user-info" th:if="${#authorization.expression('isAuthenticated()')}">
+        <p>Hi, <span th:text="${#authentication.principal.firstName}">User</span>!</p>
+        <a th:href="@{/admin/profile}">My Profile</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</header>
+
+<h1 class="users">All Users</h1>
+<div th:if="${successMessage}" class="alert alert-success">
+    <p th:text="${successMessage}" style="color: green; font-weight: bold;"></p>
+</div>
+<div th:if="${errorMessage}" class="alert alert-danger">
+    <p th:text="${errorMessage}" style="color: red; font-weight: bold;"></p>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th onclick="sortTable(0)" id="firstName-header">First Name <i class="fas fa-sort"></i></th>
+        <th onclick="sortTable(1)" id="lastName-header">Last Name <i class="fas fa-sort"></i></th>
+        <th onclick="sortTable(2)" id="email-header">Email <i class="fas fa-sort"></i></th>
+        <th onclick="sortTable(3)" id="role-header">Role <i class="fas fa-sort"></i></th>
+        <th onclick="sortTable(4)" id="enabled-header">Active <i class="fas fa-sort"></i></th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.firstName}" class="column-divider">John</td>
+        <td th:text="${user.lastName}" class="column-divider">Doe</td>
+        <td th:text="${user.username}" class="column-divider">john.doe@example.com</td>
+        <td class="column-divider">
+            <span th:each="role : ${user.roles}" th:text="${role}"></span>
+        </td>
+        <td th:text="${user.enabled ? 'Active' : 'Inactive'}" class="column-divider">Active</td>
+        <td class="column-divider">
+            <div class="form-container">
+                <form th:action="@{/admin/users/{action}/{id}(id=${user.id}, action=${user.enabled ? 'block' : 'unblock'})}"
+                      method="post"
+                      onsubmit="return confirm('Are you sure you want to ' + (/*[[${user.enabled}]]*/ false ? 'block' : 'unblock') + ' this account?');">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="${user.enabled ? 'block-link' : 'unblock-link'}">
+                        <span th:text="${user.enabled ? 'Block' : 'Unblock'}"></span>
+                    </button>
+                </form>
+                <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this account?');">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="delete-link">Delete</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<footer>
+    <p>&copy; 2024 Cinema XYZ. All rights reserved.</p>
+</footer>
+
+<script>
+    let sortDirection = false;
+    let currentColumn = -1;
+
+    function sortTable(columnIndex) {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.querySelector("table");
+        switching = true;
+
+        if (currentColumn !== columnIndex) {
+            resetSortIcons();
+            sortDirection = false;
+        }
+        sortDirection = !sortDirection;
+        currentColumn = columnIndex;
+
+        let header = document.querySelectorAll("th")[columnIndex];
+        header.querySelector("i").className = sortDirection ? "fas fa-sort-up" : "fas fa-sort-down";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+
+                if (sortDirection ? x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase() :
+                x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    function resetSortIcons() {
+        document.getElementById("firstName-header").querySelector("i").className = "fas fa-sort";
+        document.getElementById("lastName-header").querySelector("i").className = "fas fa-sort";
+        document.getElementById("email-header").querySelector("i").className = "fas fa-sort";
+        document.getElementById("role-header").querySelector("i").className = "fas fa-sort";
+        document.getElementById("enabled-header").querySelector("i").className = "fas fa-sort";
+    }
+</script>
+
+</body>
+</html>

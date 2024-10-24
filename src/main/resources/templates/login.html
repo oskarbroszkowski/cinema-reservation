@@ -159,9 +159,6 @@
     </style>
 </head>
 <body>
-<div th:if="${errorMessage}" class="alert alert-danger">
-    <p th:text="${errorMessage}"></p>
-</div>
 <header>
     <div class="visible-left">
         <a th:href="@{/homepage}">Home</a>
@@ -192,10 +189,10 @@
                 <button type="submit">Log In</button>
             </div>
             <div class="form-group">
-                <a href="/register" class="button-register">Not registered yet? Sign up now</a>
+                <a th:href="@{/register}" class="button-register">Not registered yet? Sign up now</a>
             </div>
-            <div class="error-message" th:if="${error}">
-                <p th:text="${error}"></p>
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <p th:text="${errorMessage}" style="color: red; font-weight: bold;"></p>
             </div>
         </form>
     </div>

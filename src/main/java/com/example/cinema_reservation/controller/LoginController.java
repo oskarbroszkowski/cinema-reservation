@@ -1,18 +1,15 @@
 package com.example.cinema_reservation.controller;
 
 import com.example.cinema_reservation.model.Role;
-import com.example.cinema_reservation.service.UserService;
 import com.example.cinema_reservation.model.User;
+import com.example.cinema_reservation.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -24,16 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     private RequestCache requestCache;
 
     @Autowired
@@ -44,8 +38,10 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm(@RequestParam(value = "error", required = false) String error, Model model) {
-        model.addAttribute("error", error);
+    public String showLoginForm(Model model) {
+        if (model.containsAttribute("errorMessage")) {
+            model.addAttribute("errorMessage", model.getAttribute("errorMessage"));
+        }
         return "login";
     }
 
@@ -56,10 +52,15 @@ public class LoginController {
                 new UsernamePasswordAuthenticationToken(username, password);
 
         try {
+            Optional<User> optionalUser = userService.findUserByUsername(username);
+            User user = optionalUser.get();
+
+            if (!user.isEnabled()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Your account has been blocked.");
+                return "redirect:/login";
+            }
             Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
             SecurityContextHolder.getContext().setAuthentication(authenticationResponse);
-
-            logger.info("User logged in: {}", username);
 
             request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                     SecurityContextHolder.getContext());
@@ -78,13 +79,11 @@ public class LoginController {
             return "redirect:/homepage";
 
         } catch (BadCredentialsException e) {
-            logger.error("Login attempt failed for username: {} - Bad credentials", username);
-            redirectAttributes.addFlashAttribute("error", "Invalid username or password.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password.");
             return "redirect:/login";
 
         } catch (Exception e) {
-            logger.error("Login attempt failed for username: {}", username, e);
-            redirectAttributes.addFlashAttribute("error", "An unexpected error occurred.");
+            redirectAttributes.addFlashAttribute("errorMessage", "An unexpected error occurred.");
             return "redirect:/login";
         }
     }
