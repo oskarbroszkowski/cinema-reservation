@@ -112,9 +112,6 @@ public class AdminScreeningsController {
                                 @RequestParam Long cinemaHallId,
                                 RedirectAttributes redirectAttributes) {
 
-        System.out.println("Received screeningDate: " + screeningDate);
-        System.out.println("Received time: " + time);
-
         Optional<Screening> optionalScreening = screeningService.findScreeningById(id);
         if (optionalScreening.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Screening not found.");

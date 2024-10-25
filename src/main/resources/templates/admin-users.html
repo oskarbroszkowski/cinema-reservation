@@ -195,7 +195,7 @@
         <td th:text="${user.lastName}" class="column-divider">Doe</td>
         <td th:text="${user.username}" class="column-divider">john.doe@example.com</td>
         <td class="column-divider">
-            <span th:each="role : ${user.roles}" th:text="${role}"></span>
+            <span th:each="role : ${user.roles}" th:text="${role}">Role</span>
         </td>
         <td th:text="${user.enabled ? 'Active' : 'Inactive'}" class="column-divider">Active</td>
         <td class="column-divider">

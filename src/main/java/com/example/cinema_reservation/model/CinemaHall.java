@@ -25,4 +25,14 @@ public class CinemaHall {
 
     @Column(nullable = false)
     private int columns;
+
+    public CinemaHall(String name, String hallType, int rows, int columns) {
+        this.name = name;
+        this.hallType = hallType;
+        this.rows = rows;
+        this.columns = columns;
+    }
+
+    public CinemaHall() {
+    }
 }

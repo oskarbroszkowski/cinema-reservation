@@ -11,6 +11,7 @@ public interface CinemaHallService {
 
     List<CinemaHall> findAllCinemaHalls();
     Optional<CinemaHall> findCinemaHallById(Long id);
+    Optional<CinemaHall> findCinemaHallByName(String name);
     CinemaHall saveCinemaHall(CinemaHall cinemaHall);
     CinemaHall updateCinemaHall(Long id, CinemaHall updatedCinemaHall);
     void deleteCinemaHallById(Long id);

@@ -1,5 +1,6 @@
 package com.example.cinema_reservation.controller;
 
+import com.example.cinema_reservation.model.CinemaHall;
 import com.example.cinema_reservation.model.Movie;
 import com.example.cinema_reservation.model.Screening;
 import com.example.cinema_reservation.model.User;
@@ -80,6 +81,31 @@ public class ScreeningsController {
             response.put("screeningDate", screening.getScreeningDate());
             response.put("time", screening.getScreeningTime().format(DateTimeFormatter.ofPattern("HH:mm")));
             response.put("cinemaHallId", screening.getCinemaHall().getId());
+
+            return response;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Screening not found");
+        }
+    }
+
+    @GetMapping("/screenings/data/hall/{id}")
+    @ResponseBody
+    public Map<String, Object> getCinemaHallById(@PathVariable Long id) {
+        Optional<CinemaHall> optionalCinemaHall = cinemaHallService.findCinemaHallById(id);
+
+        if (optionalCinemaHall.isPresent()) {
+
+            CinemaHall cinemaHall = optionalCinemaHall.get();
+
+            String hallName = cinemaHall.getName();
+            String hallNumberString = hallName.replaceAll("[^0-9]", "");
+            int hallNumber = Integer.parseInt(hallNumberString);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("name", hallNumber);
+            response.put("hallType", cinemaHall.getHallType());
+            response.put("rows", cinemaHall.getRows());
+            response.put("columns", cinemaHall.getColumns());
 
             return response;
         } else {

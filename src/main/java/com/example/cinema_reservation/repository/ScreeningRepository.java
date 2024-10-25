@@ -14,6 +14,7 @@ import java.util.List;
 public interface ScreeningRepository extends JpaRepository<Screening, Long> {
     @Query("SELECT s FROM Screening s WHERE s.cinemaHall.id = :cinemaHallId AND s.screeningDate = :screeningDate")
     List<Screening> findAllByCinemaHallIdAndDate(@Param("cinemaHallId") Long cinemaHallId, @Param("screeningDate") LocalDate screeningDate);
+    List<Screening> findAllByCinemaHallId(@Param("cinemaHallId") Long cinemaHallId);
     List<Screening> findByMovie(Movie movie);
     void deleteByMovieId(Long movieId);
     long count();
